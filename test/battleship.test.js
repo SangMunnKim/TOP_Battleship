@@ -5,18 +5,17 @@ test('test if ship has correct length', () => {
     expect(ship.getLength()).toBe(3);
 })
 
-
-test('test if the ship is hit', () => {
+test('test number of hits', () => {
     const ship = new Ship(3);
-    ship.hit(0);
-    expect(ship.isHit(0)).toEqual(true);
+    ship.hit();
+    expect(ship.isHit()).toBeGreaterThan(0);
 });
-
 
 test('test if the ship is destroyed', () => {
     const ship = new Ship(3);
-    ship.hit(0);
-    ship.hit(1);
-    ship.hit(2);
+    //hit the ship 3 times
+    ship.hit();
+    ship.hit();
+    ship.hit();
     expect(ship.isSunk()).toBe(true);
 });

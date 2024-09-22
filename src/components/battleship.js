@@ -4,7 +4,7 @@ class Ship {
             throw new Error('Ship length must be at least 1');
         }
         this.length = length;
-        this.hits = Array(length).fill(false);
+        this.hits = 0;
         this.destroyed = false;
     }
 
@@ -12,27 +12,20 @@ class Ship {
         return this.length;
     }
 
-    hit(position) {
-        if (position >= this.length || position < 0) {
-            throw new Error('Position out of range');
-        }
-        if (this.hits[position]) {
-            throw new Error('Position already hit');
-        }
-        this.hits[position] = true;
+    hit() {
+        this.hits += 1;
     }
     
-    isHit(position) {
-        if (position >= this.length || position < 0) {
-            throw new Error('Position out of range');
-        }
-        return this.hits[position];
+    isHit() {
+        return this.hits;
     }
     
     isSunk() {
-        return this.hits.every((hit) => hit);
+        if (this.hits >= this.length) {
+            return this.destroyed = true;
+        }
+        return this.destroyed;
     }
-
 }
 
 module.exports = Ship;
