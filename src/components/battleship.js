@@ -28,4 +28,4 @@ class Ship {
     }
 }
 
-module.exports = Ship;
+export { Ship };
