@@ -1,4 +1,4 @@
-import { Player } from '../src/components/player';
+import { Player } from '../src/factories/player';
 
 test('Player creation', () => {
     const player_1 = new Player();

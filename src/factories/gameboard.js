@@ -22,10 +22,8 @@ function gameboard(){
             } else if (grid[x][y].ship) {
                 grid[x][y].ship.hit();
                 grid[x][y].hit = true;
-                console.log('hit');
             } else {
                 grid[x][y].hit = true;
-                console.log('miss');
             }
         },
 

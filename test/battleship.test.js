@@ -1,4 +1,4 @@
-import { Ship } from '../src/components/battleship';
+import { Ship } from '../src/factories/battleship';
 
 test('test if ship has correct length', () => {
     const ship = new Ship(3);

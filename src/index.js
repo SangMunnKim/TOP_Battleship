@@ -1,6 +1,6 @@
 import "./styles.css";
-import { gameboard } from "./components/gameboard";
-import { Ship } from "./components/battleship";
+import { gameboard } from "./factories/gameboard";
+import { Ship } from "./factories/battleship";
 
 const board = gameboard();
 

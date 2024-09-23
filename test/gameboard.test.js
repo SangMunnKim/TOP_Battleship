@@ -1,5 +1,5 @@
-import { gameboard } from '../src/components/gameboard';
-import { Ship } from '../src/components/battleship';
+import { gameboard } from '../src/factories/gameboard';
+import { Ship } from '../src/factories/battleship';
 
 test('test if gameboard has correct size', () => {
     const board = gameboard();
