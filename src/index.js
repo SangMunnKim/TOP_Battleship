@@ -1,7 +1,6 @@
 import "./styles.css";
-import { gameboard } from "./factories/gameboard";
-import { Ship } from "./factories/battleship";
-import { startGame } from "./components/eventlisteners";
+
+import { startGame } from "./components/startgame";
 
 init();
 

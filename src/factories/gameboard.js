@@ -9,9 +9,22 @@ function gameboard(){
         placeShip(ship, x, y, direction) {
             for (let i = 0; i < ship.getLength(); i++) {
                 if (direction === 'horizontal') {
-                    grid[x][y + i].ship = ship;
+
+                    if (!grid[x][y + i].ship) {
+                        grid[x][y + i].ship = ship;
+                    } else {
+                        console.log('Ship already placed here');
+                        return;
+                    };
+
                 } else if (direction === 'vertical') {
-                    grid[x + i][y].ship = ship;
+
+                    if (!grid[x + i][y].ship) {
+                        grid[x + i][y].ship = ship;
+                    } else {
+                        console.log('Ship already placed here');
+                        return;
+                    };   
                 }
             }
         },
@@ -30,18 +43,7 @@ function gameboard(){
         allShipsSunk() {
             return grid.flat().filter(cell => cell.ship).every(cell => cell.ship.isSunk());
         },
-
-        render() {
-            grid.forEach(row => {
-              console.log(row.map(cell => {
-                if (cell.ship) {
-                  return cell.hit ? 'X' : 'S';  // 'S' for unhit ship, 'X' for hit ship
-                } else {
-                  return cell.hit ? 'O' : '.';  // 'O' for miss, '.' for untouched cell
-                }
-              }).join(' '));
-            });
-        }
+        
     }
 }
 
