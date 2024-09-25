@@ -1,9 +1,9 @@
 import "./styles.css";
 
-import { startGame } from "./components/startgame";
+import { app } from "./components/app";
 
 init();
 
 function init() {
-    startGame;
+    app();
 };
