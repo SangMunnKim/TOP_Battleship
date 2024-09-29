@@ -1,20 +1,20 @@
 const render = {
-    createGameBoard(grid, id) {
+    createGameBoard(grid, boardId) {
         const gameBoard = document.createElement('div');
         gameBoard.classList.add('game-board');
-        gameBoard.id = id;  // Ensure the board gets the correct ID ('player' or 'computer')
+        gameBoard.id = boardId;  // Ensure the board gets the correct ID ('player' or 'computer')
 
         const header = document.createElement('h2');
-        header.textContent = capitalize(id);
+        header.textContent = capitalize(boardId);
         gameBoard.appendChild(header);
 
         grid.forEach((row, i) => {
             const rowDiv = document.createElement('div');
             rowDiv.classList.add("row");
-            rowDiv.id = `row-${id}-${i}`;  // Unique row id based on the board
+            rowDiv.id = `row-${boardId}-${i}`;  // Unique row id based on the board
 
             row.forEach((_, j) => {
-                const cell = createCell(i, j, id);  // Pass the board id ('player' or 'computer')
+                const cell = createCell(i, j, boardId);  // Pass the board id ('player' or 'computer')
                 rowDiv.appendChild(cell);
             });
 
@@ -24,37 +24,28 @@ const render = {
         return gameBoard;
     },
 
-    // Render the player's board with visible ships
+    // Update a cell for either the player or computer’s board after an attack
+    updateCell(x, y, grid, boardId) {
+        const cell = document.getElementById(`${boardId}-${x}-${y}`);  // Ensure we target the correct board's cell
+        const cellData = grid[x][y];
+
+        if (cellData.hit && cellData.ship) {
+            updateCellUI(cell, 'hit-ship', 'S', 'red');  // Mark ship hit
+        } else if (cellData.hit) {
+            updateCellUI(cell, 'miss', 'X', 'gray');  // Mark miss
+        }
+    },
+
+    // Render the player's board to show ships at the start of the game
     renderBoardForPlayer(grid) {
         grid.forEach((row, i) => {
             row.forEach((cell, j) => {
                 if (cell.ship) {
-                    this.updatePlayerCell(i, j, grid);  // Show ships on the player's board
+                    const playerCell = document.getElementById(`player-${i}-${j}`);
+                    updateCellUI(playerCell, 'player-ship', 'S', 'green');  // Display player's ships at the start
                 }
             });
         });
-    },
-
-    // Update a cell for the player’s board (showing ships)
-    updatePlayerCell(x, y, grid) {
-        const cell = document.getElementById(`player-${x}-${y}`);  // Select by unique player cell id
-        const cellData = grid[x][y];
-
-        if (cellData.ship) {
-            updateCellUI(cell, 'player-ship', 'S', 'green');  // Mark player's ships
-        }
-    },
-
-    // Update a cell for the computer’s board (after an attack)
-    updateCell(x, y, grid) {
-        const cell = document.getElementById(`computer-${x}-${y}`);  // Select by unique computer cell id
-        const cellData = grid[x][y];
-
-        if (cellData.hit && cellData.ship) {
-            updateCellUI(cell, 'hit-ship', 'S', 'red');  // Ship was hit
-        } else if (cellData.hit) {
-            updateCellUI(cell, 'miss', 'X', 'gray');  // Missed attack
-        }
     }
 };
 
@@ -70,7 +61,7 @@ function createCell(i, j, boardId) {
 
     // Add event listener only to the computer's board cells
     if (boardId === 'computer') {
-        cell.classList.add('clickable');  // Add a class for clickable cells on computer's board
+        cell.classList.add('clickable');  // Make computer's cells clickable
     }
 
     return cell;

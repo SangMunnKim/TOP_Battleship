@@ -15,11 +15,6 @@ function app() {
     function resetGame() {
         const gameContainer = document.querySelector('.game-container');
         gameContainer.innerHTML = '';  // Clear the game board
-
-        const messageBoard = document.querySelector('.message-board');
-        if (messageBoard) {
-            messageBoard.innerHTML = '';  // Clear previous messages
-        }
     }
 }
 

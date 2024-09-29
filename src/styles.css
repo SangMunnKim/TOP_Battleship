@@ -60,3 +60,7 @@
 .clickable {
   cursor: pointer;
 }
+
+.no-click {
+  cursor: not-allowed;
+}
