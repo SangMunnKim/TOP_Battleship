@@ -5,18 +5,18 @@ import { render } from "./gameBoardUI";
 const gameContainer = document.querySelector('.game-container');
 
 const startGame = () => {
-    console.log("Hello");
+    gameContainer.innerHTML = '';
     const player = new Player();
     const computer = new Player();
 
     const ships = createShips();
     // Place ships
-    player.board.placeShip(ships.small_ship, 0, 0, 'horizontal');
-    player.board.placeShip(ships.small_ship, 1, 0, 'vertical');
-    player.board.placeShip(ships.medium_ship, 2, 2, 'horizontal');
-    player.board.placeShip(ships.medium_ship, 3, 2, 'vertical');
-    player.board.placeShip(ships.large_ship, 5, 4, 'horizontal');
-    player.board.placeShip(ships.large_ship, 8, 5, 'horizontal');
+    player.board.placeShip(ships.small_ship, 1, 0, 'horizontal');
+    player.board.placeShip(ships.small_ship, 2, 0, 'vertical');
+    player.board.placeShip(ships.medium_ship, 3, 2, 'horizontal');
+    player.board.placeShip(ships.medium_ship, 4, 2, 'vertical');
+    player.board.placeShip(ships.large_ship, 6, 4, 'horizontal');
+    player.board.placeShip(ships.large_ship, 7, 5, 'horizontal');
 
     computer.board.placeShip(ships.small_ship, 0, 0, 'horizontal');
     computer.board.placeShip(ships.small_ship, 1, 0, 'vertical');
@@ -25,8 +25,11 @@ const startGame = () => {
     computer.board.placeShip(ships.large_ship, 5, 4, 'horizontal');
     computer.board.placeShip(ships.large_ship, 8, 5, 'horizontal');
 
-    const computersGameboard = render.createGameBoard(player.board.getGrid());
+    const computersGameboard = render.createGameBoard(computer.board.getGrid());
     gameContainer.appendChild(computersGameboard);
+
+    const playersGameboard = render.createGameBoard(player.board.getGrid());
+    gameContainer.appendChild(playersGameboard);
     
     return { player, computer };
 };
