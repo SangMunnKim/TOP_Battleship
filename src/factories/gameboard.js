@@ -6,7 +6,6 @@ function gameboard() {
             return grid;
         },
 
-        // Method to place a ship on the board
         placeShip(ship, x, y, direction) {
             for (let i = 0; i < ship.getLength(); i++) {
                 if (direction === 'horizontal') {
@@ -27,7 +26,6 @@ function gameboard() {
             }
         },
 
-        // Attack method
         attack(x, y) {
             if (!grid[x][y].hit) {  // If the cell hasn't been hit before
                 grid[x][y].hit = true;
@@ -42,7 +40,6 @@ function gameboard() {
             }
         },
 
-        // Check if all ships are sunk
         allShipsSunk() {
             return grid.flat().filter(cell => cell.ship).every(cell => cell.ship.isSunk());
         }

@@ -1,6 +1,5 @@
 import { render } from "./gameBoardUI";
 
-// To store the game state
 let playerTurn = true;
 
 function observeGame(player, computer) {
@@ -34,6 +33,12 @@ function registerPlayerAttack(x, y, player, computer, cell) {
 
     console.log("Player attack registered at:", x, y);
 
+    // Check if computer has lost
+    if (computer.getBoard().allShipsSunk()) {
+        triggerGameOver('Player');
+        return;
+    }
+
     // Switch to computer's turn
     playerTurn = false;
 
@@ -58,11 +63,16 @@ function computerAttack(player, computer) {
 
     console.log("Computer attack registered at:", x, y);
 
+    // Check if player has lost
+    if (player.getBoard().allShipsSunk()) {
+        triggerGameOver('Computer');
+        return;
+    }
+
     // Switch back to player's turn
     playerTurn = true;
 }
 
-// Helper function to get all unclicked cells on the player's board
 function getAvailableCells(grid) {
     const availableCells = [];
     grid.forEach((row, i) => {
@@ -73,6 +83,20 @@ function getAvailableCells(grid) {
         });
     });
     return availableCells;
+}
+
+// Trigger game over when one side wins
+function triggerGameOver(winner) {
+    console.log(`${winner} wins!`);
+
+    const gameOverMessage = document.createElement('div');
+    gameOverMessage.classList.add('game-over');
+    gameOverMessage.textContent = `${winner} wins! Game Over.`;
+    document.body.appendChild(gameOverMessage);
+
+    // Disable further clicks by removing the 'clickable' class from the computer's cells
+    const computerCells = document.querySelectorAll('.clickable');
+    computerCells.forEach(cell => cell.classList.remove('clickable'));
 }
 
 export { observeGame };
