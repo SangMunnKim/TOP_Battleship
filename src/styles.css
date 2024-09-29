@@ -14,14 +14,14 @@
 
 .game-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .game-board {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 2px solid hwb(198 0% 0%);
 }
 
 .row {
@@ -42,5 +42,21 @@
 }
 
 .cell:hover {
+  cursor: pointer;
+}
+
+.player-ship {
+  background-color: green;
+}
+
+.hit-ship {
+  background-color: red;
+}
+
+.miss {
+  background-color: gray;
+}
+
+.clickable {
   cursor: pointer;
 }

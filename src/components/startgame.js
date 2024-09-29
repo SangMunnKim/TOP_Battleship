@@ -2,44 +2,50 @@ import { Player } from "../factories/player";
 import { Ship } from "../factories/battleship";
 import { render } from "./gameBoardUI";
 
-const gameContainer = document.querySelector('.game-container');
-
-const startGame = () => {
-    gameContainer.innerHTML = '';
-    const player = new Player();
-    const computer = new Player();
-
-    const ships = createShips();
-    // Place ships
+// Utility to place ships
+function placeShips(player, ships) {
     player.board.placeShip(ships.small_ship, 1, 0, 'horizontal');
     player.board.placeShip(ships.small_ship, 2, 0, 'vertical');
     player.board.placeShip(ships.medium_ship, 3, 2, 'horizontal');
     player.board.placeShip(ships.medium_ship, 4, 2, 'vertical');
     player.board.placeShip(ships.large_ship, 6, 4, 'horizontal');
     player.board.placeShip(ships.large_ship, 7, 5, 'horizontal');
+}
 
-    computer.board.placeShip(ships.small_ship, 0, 0, 'horizontal');
-    computer.board.placeShip(ships.small_ship, 1, 0, 'vertical');
-    computer.board.placeShip(ships.medium_ship, 2, 2, 'horizontal');
-    computer.board.placeShip(ships.medium_ship, 3, 2, 'vertical');
-    computer.board.placeShip(ships.large_ship, 5, 4, 'horizontal');
-    computer.board.placeShip(ships.large_ship, 8, 5, 'horizontal');
+const startGame = () => {
+    const gameContainer = document.querySelector('.game-container');
+    gameContainer.innerHTML = ''; // Clear previous content
 
-    const computersGameboard = render.createGameBoard(computer.board.getGrid());
-    gameContainer.appendChild(computersGameboard);
+    const player = new Player();
+    const computer = new Player();
 
-    const playersGameboard = render.createGameBoard(player.board.getGrid());
-    gameContainer.appendChild(playersGameboard);
-    
+    const ships = createShips();
+
+    // Place ships for player and computer using utility function
+    placeShips(player, ships);
+    placeShips(computer, ships);
+
+    // Render gameboards
+    renderBoard(gameContainer, player, "player");
+    renderBoard(gameContainer, computer, "computer");
+
+    render.renderBoardForPlayer(player.board.getGrid());
+
     return { player, computer };
 };
 
-function createShips() {
-    const small_ship = new Ship(2);
-    const medium_ship = new Ship(3);
-    const large_ship = new Ship(4);
+// Helper function to create and render the board
+function renderBoard(container, player, id) {
+    const board = render.createGameBoard(player.board.getGrid(), id);
+    container.appendChild(board);
+}
 
-    return { small_ship, medium_ship, large_ship };
+function createShips() {
+    return {
+        small_ship: new Ship(2),
+        medium_ship: new Ship(3),
+        large_ship: new Ship(4),
+    };
 }
 
 export { startGame };
